@@ -1,4 +1,6 @@
 .terraform/
+code/output/
+!code/output/.keep
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup

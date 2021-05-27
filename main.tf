@@ -140,7 +140,7 @@ resource "aws_lambda_function" "sntl-lambda-start" {
   handler       = "lambda_sentinel_start.lambda_handler"
   timeout       = 60
 
-  source_code_hash = filebase64sha256("${path.module}/code/output/lambda_sentinel_start.zip")
+  source_code_hash = data.archive_file.sntl-start.output_base64sha256 
 
   runtime = "python3.8"
 
@@ -163,7 +163,7 @@ resource "aws_lambda_function" "sntl-lambda-stop" {
   handler       = "lambda_sentinel_stop.lambda_handler"
   timeout       = 60
 
-  source_code_hash = filebase64sha256("${path.module}/code/output/lambda_sentinel_stop.zip")
+  source_code_hash = data.archive_file.sntl-stop.output_base64sha256 
 
   runtime = "python3.8"
 
