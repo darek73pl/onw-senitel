@@ -123,24 +123,24 @@ data "archive_file" "sntl-start" {
   type             = "zip"
   output_file_mode = "0666"
   source_file      = "${path.module}/code/lambda_sentinel_start.py"
-  output_path      = "${path.module}/code/lambda_sentinel_start.zip"
+  output_path      = "${path.module}/code/output/lambda_sentinel_start.zip"
 }
 
 data "archive_file" "sntl-stop" {
   type             = "zip"
   output_file_mode = "0666"
   source_file      = "${path.module}/code/lambda_sentinel_stop.py"
-  output_path      = "${path.module}/code/lambda_sentinel_stop.zip"
+  output_path      = "${path.module}/code/output/lambda_sentinel_stop.zip"
 }
 
 resource "aws_lambda_function" "sntl-lambda-start" {
-  filename      = "${path.module}/code/lambda_sentinel_start.zip"
+  filename      = "${path.module}/code/output/lambda_sentinel_start.zip"
   function_name = "${var.name_prefix}-lambda-start-sentinel"
   role          = aws_iam_role.sntl-lambda-exec-role.arn
   handler       = "lambda_sentinel_start.lambda_handler"
   timeout       = 60
 
-  source_code_hash = filebase64sha256("${path.module}/code/lambda_sentinel_start.zip")
+  source_code_hash = filebase64sha256("${path.module}/code/output/lambda_sentinel_start.zip")
 
   runtime = "python3.8"
 
@@ -157,13 +157,13 @@ resource "aws_lambda_function" "sntl-lambda-start" {
 }
 
 resource "aws_lambda_function" "sntl-lambda-stop" {
-  filename      = "${path.module}/code/lambda_sentinel_stop.zip"
+  filename      = "${path.module}/code/output/lambda_sentinel_stop.zip"
   function_name = "${var.name_prefix}-lambda-stop-sentinel"
   role          = aws_iam_role.sntl-lambda-exec-role.arn
   handler       = "lambda_sentinel_stop.lambda_handler"
   timeout       = 60
 
-  source_code_hash = filebase64sha256("${path.module}/code/lambda_sentinel_stop.zip")
+  source_code_hash = filebase64sha256("${path.module}/code/output/lambda_sentinel_stop.zip")
 
   runtime = "python3.8"
 
